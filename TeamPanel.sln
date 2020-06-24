@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamPanel", "TeamPanel\TeamPanel.csproj", "{DC223DF0-6257-4F82-B0AE-2B43E7588175}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamPanel", "TeamPanel\TeamPanel.csproj", "{B01D7023-48C3-424F-8F69-687BE0AA2106}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DC223DF0-6257-4F82-B0AE-2B43E7588175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC223DF0-6257-4F82-B0AE-2B43E7588175}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC223DF0-6257-4F82-B0AE-2B43E7588175}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC223DF0-6257-4F82-B0AE-2B43E7588175}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B01D7023-48C3-424F-8F69-687BE0AA2106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B01D7023-48C3-424F-8F69-687BE0AA2106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B01D7023-48C3-424F-8F69-687BE0AA2106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B01D7023-48C3-424F-8F69-687BE0AA2106}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C36D8F64-A22B-4EB5-AD77-80F928545961}
+		SolutionGuid = {56106CE8-D9A1-40C4-B743-CBCD6DF0F730}
 	EndGlobalSection
 EndGlobal
