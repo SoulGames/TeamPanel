@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 
 namespace TeamPanel.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private MySqlConnection MySQL;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(MySqlConnection mySQL)
         {
-            _logger = logger;
+            MySQL = mySQL;
         }
 
         public void OnGet()

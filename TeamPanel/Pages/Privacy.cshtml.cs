@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 
 namespace TeamPanel.Pages
 {
     public class PrivacyModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private MySqlConnection MySQL;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public PrivacyModel(MySqlConnection mySQL)
         {
-            _logger = logger;
+            MySQL = mySQL;
         }
 
         public void OnGet()
