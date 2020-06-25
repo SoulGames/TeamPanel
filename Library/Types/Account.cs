@@ -6,6 +6,7 @@ namespace Library.Types
     public class Account
     {
         [ExplicitKey]
+        int ID { get; set; }
         string USERNAME { get; set; }
         string PASSWORD { get; set; }
     }
