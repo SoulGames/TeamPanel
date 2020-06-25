@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySql.Data.MySqlClient;
 
 namespace TeamPanel
 {
@@ -23,22 +24,47 @@ namespace TeamPanel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            string serverName = Configuration.GetValue<string>("host");
+            uint port = Configuration.GetValue<uint>("port");
+            string userId = Configuration.GetValue<string>("user");
+            string password = Configuration.GetValue<string>("password");
+            string databaseName = Configuration.GetValue<string>("name");
+
+            MySqlConnectionStringBuilder ConnectionBuilder = new MySqlConnectionStringBuilder();
+            ConnectionBuilder.Server = serverName;
+            ConnectionBuilder.Port = port;
+            ConnectionBuilder.UserID = userId;
+            ConnectionBuilder.Password = password;
+            ConnectionBuilder.Database = databaseName;
+            ConnectionBuilder.AllowUserVariables = true;
+
+            string cs = ConnectionBuilder.ConnectionString;
+
+
+            MySqlConnection connection = new MySqlConnection(ConnectionBuilder.ConnectionString);
+
+            services.AddTransient<MySqlConnection>(e => new MySqlConnection(cs));
+            services.AddDistributedMemoryCache();
+
+            services.AddControllersWithViews()
+                .AddSessionStateTempDataProvider();
+            services.AddRazorPages()
+                .AddSessionStateTempDataProvider();
+
+            services.AddMvc();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            { app.UseDeveloperExceptionPage(); }
             else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            { app.UseExceptionHandler("/Error"); }
+
+            app.UseStaticFiles();
+            app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -50,7 +76,24 @@ namespace TeamPanel
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+        }
+
+
+        public static MySqlConnection GetSQLConnection(string serverName, string userId, string password, string databaseName)
+        {
+            MySqlConnectionStringBuilder ConnectionBuilder = new MySqlConnectionStringBuilder();
+            ConnectionBuilder.Server = serverName;
+            ConnectionBuilder.UserID = userId;
+            ConnectionBuilder.Password = password;
+            ConnectionBuilder.Database = databaseName;
+
+            MySqlConnection connection = new MySqlConnection(ConnectionBuilder.ConnectionString);
+            return connection;
         }
     }
 }
