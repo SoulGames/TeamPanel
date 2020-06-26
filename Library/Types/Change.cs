@@ -7,10 +7,10 @@ namespace Library.Types
     public class Change
     {
         [ExplicitKey]
-        int ID { get; set; }
-        string TITLE { get; set; }
-        string CHANGENEWS { get; set; }
-        DateTime CREATED_AT { get; set; }
-        string CAT { get; set; }
+        public int ID { get; set; }
+        public string TITLE { get; set; }
+        public string CHANGENEWS { get; set; }
+        public DateTime CREATED_AT { get; set; }
+        public string CAT { get; set; }
     }
 }

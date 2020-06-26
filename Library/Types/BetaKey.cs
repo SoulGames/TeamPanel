@@ -6,7 +6,7 @@ namespace Library.Types
     public class BetaKey
     {
         [ExplicitKey]
-        int ID { get; set; }
-        string BETAPW { get; set; }
+        public int ID { get; set; }
+        public string BETAPW { get; set; }
     }
 }
