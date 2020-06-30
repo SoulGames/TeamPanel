@@ -3,3 +3,24 @@
 @{
     ViewData["Title"] = "Accounts";
 }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Library.Types.Account CurrentAccount in Model.Accounts)
+            {
+                <tr>
+                    <th scope="row">@CurrentAccount.ID</th>
+                    <td>@CurrentAccount.USERNAME</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+

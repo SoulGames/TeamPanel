@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper.Contrib.Extensions;
+using Library.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -13,6 +15,8 @@ namespace TeamPanel.Pages
     {
         private MySqlConnection MySQL;
 
+        public IEnumerable<Account> Accounts;
+
         public AccountsModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
@@ -20,7 +24,7 @@ namespace TeamPanel.Pages
 
         public void OnGet()
         {
-
+            Accounts = MySQL.GetAll<Account>();
         }
     }
 }
