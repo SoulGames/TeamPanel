@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>No Name Pro</Authors>
+    <Company>SoulGames</Company>
+    <Description>👥 Team Panel by No Name Pro writtten in ASP.NET Core</Description>
+    <RepositoryUrl>https://github.com/SoulGames/TeamPanel</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
