@@ -11,13 +11,13 @@ using MySql.Data.MySqlClient;
 
 namespace TeamPanel.Pages
 {
-    public class AccountsModel : PageModel
+    public class AccountsIndexModel : PageModel
     {
         private MySqlConnection MySQL;
 
         public IEnumerable<Account> Accounts;
 
-        public AccountsModel(MySqlConnection mySQL)
+        public AccountsIndexModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
         }
