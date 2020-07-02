@@ -19,10 +19,21 @@ namespace TeamPanel.Pages
             MySQL = mySQL;
         }
 
-        public void OnGet()
+        public void OnGet(int id, string redirect)
         {
-
-
+            if (!String.IsNullOrEmpty(Convert.ToString(id)))
+            {
+                Account DeleteAccount = MySQL.Get<Account>(id);
+                MySQL.Delete(DeleteAccount);
+            }
+            if (String.IsNullOrEmpty(redirect))
+            {
+                Response.Redirect("/Accounts");
+            }
+            else
+            {
+                Response.Redirect(redirect);
+            }
         }
     }
 }
