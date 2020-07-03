@@ -26,5 +26,9 @@ namespace Library.Managers
         {
             return BCrypt.Net.BCrypt.HashString(text);
         }
+        public static bool VerifyBCrypt(string text, string hash)
+        {
+            return BCrypt.Net.BCrypt.Verify(text, hash);
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Managers;
+using Library.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -17,6 +19,8 @@ namespace TeamPanel.Pages
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
+        public Account LoginUser;
+
         private readonly ILogger<ErrorModel> _logger;
         private MySqlConnection MySQL;
 
@@ -26,9 +30,16 @@ namespace TeamPanel.Pages
             MySQL = mySQL;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+
+            // Authorization
+            AuthorizationResult authorizationResult;
+            if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
+            LoginUser = authorizationResult.Account;
+
+            return Page();
         }
     }
 }

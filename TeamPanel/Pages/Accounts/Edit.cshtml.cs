@@ -9,12 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
+using Library.Managers;
+using Library.Types;
 
 namespace TeamPanel.Pages
 {
     public class AccountsEditModel : PageModel
     {
         private MySqlConnection MySQL;
+        public Account LoginUser;
         public AccountsEditModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
@@ -29,8 +32,13 @@ namespace TeamPanel.Pages
         [BindProperty]
         public string Password { get; set; }
 
-        public void OnGet(string id, string redirect)
+        public IActionResult OnGet(string id, string redirect)
         {
+            // Authorization
+            AuthorizationResult authorizationResult;
+            if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
+            LoginUser = authorizationResult.Account;
+
             if (!string.IsNullOrEmpty(id))
             {
                 Account Account = MySQL.Get<Account>(Convert.ToInt32(id));
@@ -41,13 +49,15 @@ namespace TeamPanel.Pages
             else {
                 if (!String.IsNullOrEmpty(redirect))
                 {
-                    Response.Redirect(Redirect);
+                    return Redirect(Redirect);
                 }
                 else
                 {
-                    Response.Redirect("/Accounts");
+                    return Redirect("/Accounts");
                 }
             }
+
+            return Page();
         }
 
         public IActionResult OnPostAsync()

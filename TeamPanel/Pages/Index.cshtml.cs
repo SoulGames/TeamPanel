@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
+using Library.Managers;
+using Library.Types;
 
 namespace TeamPanel.Pages
 {
@@ -13,14 +15,21 @@ namespace TeamPanel.Pages
     {
         private MySqlConnection MySQL;
 
+        public Account LoginUser;
+
         public IndexModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            // Authorization
+            AuthorizationResult authorizationResult;
+            if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
+            LoginUser = authorizationResult.Account;
 
+            return Page();
         }
     }
 }
