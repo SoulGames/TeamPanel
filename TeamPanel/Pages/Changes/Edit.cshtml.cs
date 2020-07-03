@@ -19,6 +19,16 @@ namespace TeamPanel.Pages
         private MySqlConnection MySQL;
         public Account LoginUser;
 
+        [BindProperty]
+        public string Id { get; set; }
+        [BindProperty]
+        public string Redirect { get; set; }
+
+        [BindProperty]
+        public string Title { get; set; }
+        [BindProperty]
+        public string Content { get; set; }
+
         public ChangesEditModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
@@ -31,7 +41,42 @@ namespace TeamPanel.Pages
             if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
             LoginUser = authorizationResult.Account;
 
+            if (!string.IsNullOrEmpty(id))
+            {
+                Change Change = MySQL.Get<Change>(Convert.ToInt32(id));
+                Id = id;
+                Title = Change.TITLE;
+                Content = Change.CHANGENEWS;
+                Redirect = redirect;
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(redirect))
+                {
+                    return Redirect(Redirect);
+                }
+                return Redirect("/Changes");
+            }
+
             return Page();
+        }
+
+        public IActionResult OnPostAsync()
+        {
+            if (String.IsNullOrEmpty(Title)) { return Page(); }
+            if (String.IsNullOrEmpty(Content)) { return Page(); }
+
+            Change Change = MySQL.Get<Change>(Convert.ToInt32(Id));
+            Change.TITLE = Title;
+            Change.CHANGENEWS = Content;
+
+            MySQL.Update(Change);
+
+            if (!String.IsNullOrEmpty(Redirect))
+            {
+                return Redirect(Redirect);
+            }
+            return Redirect("/Changes");
         }
     }
 }
