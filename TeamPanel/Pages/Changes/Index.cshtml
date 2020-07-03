@@ -23,14 +23,25 @@
     <tbody>
         @foreach (Library.Types.Change CurrentChange in Model.Changes)
         {
-            <tr>
-                <th scope="row">@CurrentChange.ID</th>
-                <td>@CurrentChange.TITLE</td>
-                <td>@CurrentChange.CHANGENEWS</td>
-                <td>@CurrentChange.CREATED_AT.Date</td>
-                <td>@CurrentChange.CAT</td>
-                <td></td>
-            </tr>
+        <tr>
+            <th scope="row">@CurrentChange.ID</th>
+            <td>@CurrentChange.TITLE</td>
+            <td>@CurrentChange.CHANGENEWS</td>
+            <td>@CurrentChange.CREATED_AT.Date</td>
+            <td>@CurrentChange.CAT</td>
+            <td>
+                <a class="btn btn-danger btn-sm" role="button" id="delete" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:;">Delete</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="modal-body">
+                        <p>Are you sure, you want to delete this Change?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-danger mr-2" href="Delete?id=@CurrentChange.ID">Confirm</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

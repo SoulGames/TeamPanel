@@ -29,7 +29,19 @@ namespace TeamPanel.Pages
             if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
             LoginUser = authorizationResult.Account;
 
-            return Page();
+            if (!String.IsNullOrEmpty(Convert.ToString(id)))
+            {
+                Change DeleteChange = MySQL.Get<Change>(id);
+                MySQL.Delete(DeleteChange);
+            }
+            if (String.IsNullOrEmpty(redirect))
+            {
+                return Redirect("/Changes");
+            }
+            else
+            {
+                return Redirect(redirect);
+            }
         }
     }
 }
