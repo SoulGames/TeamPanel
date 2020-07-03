@@ -6,9 +6,9 @@ namespace Library.Types
     public class BetaUser
     {
         [ExplicitKey]
-        int ID { get; set; }
-        string USERNAME { get; set; }
-        int isB { get; set; }
+        public int ID { get; set; }
+        public string USERNAME { get; set; }
+        public int isB { get; set; }
 
     }
 }

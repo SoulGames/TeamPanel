@@ -1,0 +1,42 @@
+﻿@page
+@model AccountsIndexModel
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+<center>
+    <a class="btn btn-primary" asp-page="Add">Add</a>
+</center>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Types.Account CurrentAccount in Model.Accounts)
+        {
+            <tr>
+                <th scope="row">@CurrentAccount.ID</th>
+                <td>@CurrentAccount.USERNAME</td>
+                <td>
+                    <a class="btn btn-danger btn-sm" role="button" id="delete" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:;">Delete</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="modal-body">
+                            <p>Are you sure, you want to delete this user?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-danger mr-2" href="Delete?id=@CurrentAccount.ID">Confirm</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <a class="btn btn-info btn-sm" role="button" href="/Accounts/Edit?id=@CurrentAccount.ID">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
