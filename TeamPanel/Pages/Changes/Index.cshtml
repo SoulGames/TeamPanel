@@ -4,6 +4,11 @@
     ViewData["Title"] = "Changes";
 }
 
+<center>
+    <a class="btn btn-primary" asp-page="Add">Add</a>
+</center>
+<br />
+
 <table class="table">
     <thead>
         <tr>
@@ -18,14 +23,14 @@
     <tbody>
         @foreach (Library.Types.Change CurrentChange in Model.Changes)
         {
-        <tr>
-            <th scope="row">@CurrentChange.ID</th>
-            <td>@CurrentChange.TITLE</td>
-            <td>@CurrentChange.CHANGENEWS</td>
-            <td>@CurrentChange.CREATED_AT.Date</td>
-            <td>@CurrentChange.CAT</td>
-            <td></td>
-        </tr>
+            <tr>
+                <th scope="row">@CurrentChange.ID</th>
+                <td>@CurrentChange.TITLE</td>
+                <td>@CurrentChange.CHANGENEWS</td>
+                <td>@CurrentChange.CREATED_AT.Date</td>
+                <td>@CurrentChange.CAT</td>
+                <td></td>
+            </tr>
         }
     </tbody>
 </table>

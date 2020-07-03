@@ -19,6 +19,14 @@ namespace TeamPanel.Pages
         private MySqlConnection MySQL;
         public Account LoginUser;
 
+
+        [BindProperty]
+        public string Title { get; set; }
+        [BindProperty]
+        public string Content { get; set; }
+        [BindProperty]
+        public string Category { get; set; }
+
         public ChangesAddModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
@@ -32,6 +40,23 @@ namespace TeamPanel.Pages
             LoginUser = authorizationResult.Account;
 
             return Page();
+        }
+
+
+        public IActionResult OnPostAsync()
+        {
+            if (String.IsNullOrEmpty(Title)) { return Page(); }
+            if (String.IsNullOrEmpty(Content)) { return Page(); }
+
+            Change change = new Change();
+            change.TITLE = Title;
+            change.CHANGENEWS = Content;
+            change.CREATED_AT = DateTime.Now;
+            change.CAT = "";
+
+            MySQL.Insert(change);
+
+            return Redirect("/Changes");
         }
     }
 }
