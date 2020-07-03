@@ -37,6 +37,7 @@ namespace TeamPanel
             ConnectionBuilder.Password = password;
             ConnectionBuilder.Database = databaseName;
             ConnectionBuilder.AllowUserVariables = true;
+            ConnectionBuilder.AllowZeroDateTime = true;
 
             string cs = ConnectionBuilder.ConnectionString;
 

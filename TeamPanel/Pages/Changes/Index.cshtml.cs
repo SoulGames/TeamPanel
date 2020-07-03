@@ -17,6 +17,8 @@ namespace TeamPanel.Pages
     {
         private MySqlConnection MySQL;
 
+        public IEnumerable<Change> Changes;
+
         public Account LoginUser;
 
         public ChangesIndexModel(MySqlConnection mySQL)
@@ -29,6 +31,8 @@ namespace TeamPanel.Pages
             // Authorization
             AuthorizationResult authorizationResult;
             if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
+
+            Changes = MySQL.GetAll<Change>();
 
             return Page();
 

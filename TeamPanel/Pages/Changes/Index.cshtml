@@ -3,3 +3,29 @@
 @{
     ViewData["Title"] = "Changes";
 }
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Content</th>
+            <th scope="col">Created</th>
+            <th scope="col">Category</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Types.Change CurrentChange in Model.Changes)
+        {
+        <tr>
+            <th scope="row">@CurrentChange.ID</th>
+            <td>@CurrentChange.TITLE</td>
+            <td>@CurrentChange.CHANGENEWS</td>
+            <td>@CurrentChange.CREATED_AT.Date</td>
+            <td>@CurrentChange.CAT</td>
+            <td></td>
+        </tr>
+        }
+    </tbody>
+</table>
