@@ -22,12 +22,6 @@
 * Twitter: [@NoNamePro0](https://twitter.com/NoNamePro0)
 * Github: [@NoNamePro0](https://github.com/NoNamePro0)
 
-#### 👤 StackNeverFlow
-
-* Website: [LinusL.de](https://www.linusl.de)
-* Twitter: [@StackNeverFlow](https://twitter.com/StackNeverFlow)
-* Github: [@StackNeverFlow](https://github.com/StackNeverFlow)
-
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br>
