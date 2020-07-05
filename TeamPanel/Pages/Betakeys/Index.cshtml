@@ -24,7 +24,16 @@
                 <th scope="row">@CurrentBetakey.ID</th>
                 <td>@CurrentBetakey.BETAPW</td>
                 <td>
-
+                    <a class="btn btn-danger btn-sm" role="button" id="delete" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:;">Delete</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="modal-body">
+                            <p>Are you sure, you want to delete this Betakey?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-danger mr-2" href="/Betakeys/Delete?id=@CurrentBetakey.ID">Confirm</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
                 </td>
             </tr>
         }
