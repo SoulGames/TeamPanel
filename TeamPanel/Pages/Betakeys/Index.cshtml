@@ -1,0 +1,32 @@
+﻿@page
+@model BetakeysIndexModel
+@{
+    ViewData["Title"] = "Betakeys";
+}
+
+<center>
+    <a class="btn btn-primary" asp-page="Add">Add</a>
+</center>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Types.BetaKey CurrentBetakey in Model.BetaKeys)
+        {
+            <tr>
+                <th scope="row">@CurrentBetakey.ID</th>
+                <td>@CurrentBetakey.BETAPW</td>
+                <td>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
