@@ -29,6 +29,13 @@ namespace TeamPanel.Pages
         [BindProperty]
         public string Content { get; set; }
 
+        [BindProperty]
+        public string Category { get; set; }
+        [BindProperty]
+        public ChangeCategory CurrentCategory { get; set; }
+
+        public IEnumerable<ChangeCategory> Categories;
+
         public ChangesEditModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
@@ -43,11 +50,13 @@ namespace TeamPanel.Pages
 
             if (!string.IsNullOrEmpty(id))
             {
-                Change Change = MySQL.Get<Change>(Convert.ToInt32(id));
+                Redirect = redirect;
                 Id = id;
+
+                Change Change = MySQL.Get<Change>(Convert.ToInt32(Id));
                 Title = Change.TITLE;
                 Content = Change.CHANGENEWS;
-                Redirect = redirect;
+                CurrentCategory = MySQL.Get<ChangeCategory>(Change.CAT);
             }
             else
             {
@@ -57,6 +66,7 @@ namespace TeamPanel.Pages
                 }
                 return Redirect("/Changes");
             }
+            Categories = MySQL.GetAll<ChangeCategory>();
 
             return Page();
         }
@@ -69,6 +79,33 @@ namespace TeamPanel.Pages
             Change Change = MySQL.Get<Change>(Convert.ToInt32(Id));
             Change.TITLE = Title;
             Change.CHANGENEWS = Content;
+
+            if (Category == "Undefined")
+            {
+                Change.CAT = 0;
+            }
+            else
+            {
+                if (Category == "Select this, to use the lastest.")
+                {
+                <    Change.CAT = MySQL.Get<ChangeCategory>(Change.CAT).ID;
+                }
+                else
+                {
+
+                    foreach (ChangeCategory CurrentChangeCategory in MySQL.GetAll<ChangeCategory>())
+                    {
+                        if (CurrentChangeCategory.TITLE == Category)
+                        {
+                            Change.CAT = CurrentChangeCategory.ID;
+                        }
+                    }
+                    if (String.IsNullOrEmpty(Convert.ToString(Change.CAT)))
+                    {
+                        Change.CAT = 0;
+                    }
+                }
+            }
 
             MySQL.Update(Change);
 

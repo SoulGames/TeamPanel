@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
+using Library.Managers;
 using Library.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,20 +11,21 @@ using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using Library.Managers;
 using Library.Types;
-using System.IO;
 
 namespace TeamPanel.Pages
 {
-    public class ChangesIndexModel : PageModel
+    public class ChangesCategoryAddModel : PageModel
     {
         private MySqlConnection MySQL;
-
-        public IEnumerable<Change> Changes;
-        public Dictionary<int, string> Categories = new Dictionary<int, string>();
-
         public Account LoginUser;
 
-        public ChangesIndexModel(MySqlConnection mySQL)
+
+        [BindProperty]
+        public string Title { get; set; }
+        [BindProperty]
+        public string Category { get; set; }
+
+        public ChangesCategoryAddModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
         }
@@ -33,15 +35,22 @@ namespace TeamPanel.Pages
             // Authorization
             AuthorizationResult authorizationResult;
             if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
-
-            Changes = MySQL.GetAll<Change>();
-
-            Categories.Add(0, "Undefined");
-            foreach(ChangeCategory CurrentChangeCategory in MySQL.GetAll<ChangeCategory>())
-            { Categories.Add(CurrentChangeCategory.ID, CurrentChangeCategory.TITLE); }
+            LoginUser = authorizationResult.Account;
 
             return Page();
+        }
 
+
+        public IActionResult OnPostAsync()
+        {
+            if (String.IsNullOrEmpty(Title)) { return Page(); }
+
+            ChangeCategory category = new ChangeCategory();
+            category.TITLE = Title;
+
+            MySQL.Insert(category);
+
+            return Redirect("/Changes/Category");
         }
     }
 }

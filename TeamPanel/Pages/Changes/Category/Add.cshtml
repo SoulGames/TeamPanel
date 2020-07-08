@@ -1,0 +1,14 @@
+﻿@page
+@model ChangesCategoryAddModel
+@{
+    ViewData["Title"] = "Change Category Creation";
+}
+
+    <form method="post">
+        <div class="form-group">
+            <label for="InputTitle">Title</label>
+            <input asp-for="Title" type="text" class="form-control" id="InputTitle" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-secondary" href="/Changes/Category">Back</a>
+    </form>

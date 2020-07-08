@@ -10,38 +10,38 @@ using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using Library.Managers;
 using Library.Types;
-using System.IO;
 
 namespace TeamPanel.Pages
 {
-    public class ChangesIndexModel : PageModel
+    public class ChangesCategoryDeleteModel : PageModel
     {
         private MySqlConnection MySQL;
-
-        public IEnumerable<Change> Changes;
-        public Dictionary<int, string> Categories = new Dictionary<int, string>();
-
         public Account LoginUser;
-
-        public ChangesIndexModel(MySqlConnection mySQL)
+        public ChangesCategoryDeleteModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int id, string redirect)
         {
             // Authorization
             AuthorizationResult authorizationResult;
             if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
+            LoginUser = authorizationResult.Account;
 
-            Changes = MySQL.GetAll<Change>();
-
-            Categories.Add(0, "Undefined");
-            foreach(ChangeCategory CurrentChangeCategory in MySQL.GetAll<ChangeCategory>())
-            { Categories.Add(CurrentChangeCategory.ID, CurrentChangeCategory.TITLE); }
-
-            return Page();
-
+            if (!String.IsNullOrEmpty(Convert.ToString(id)))
+            {
+                ChangeCategory DeleteCategory = MySQL.Get<ChangeCategory>(id);
+                MySQL.Delete(DeleteCategory);
+            }
+            if (String.IsNullOrEmpty(redirect))
+            {
+                return Redirect("/Changes/Category/");
+            }
+            else
+            {
+                return Redirect(redirect);
+            }
         }
     }
 }

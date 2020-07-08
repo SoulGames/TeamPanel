@@ -3,17 +3,28 @@
 @{
     ViewData["Title"] = "Change Edit";
 }
-    <form method="post">
-        <input asp-for="Id" hidden>
-        <input asp-for="Redirect" hidden>
-        <div class="form-group">
-            <label for="InputTitle">Title</label>
-            <input asp-for="Title" type="text" class="form-control" id="InputTitle" required>
-        </div>
-        <div class="form-group">
-            <label for="InputContent1">Content</label>
-            <textarea asp-for="Content" class="form-control" id="InputContent1" required ></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <a class="btn btn-secondary" href="/Changes">Back</a>
-    </form>
+<form method="post">
+    <input asp-for="Id" hidden>
+    <input asp-for="Redirect" hidden>
+    <div class="form-group">
+        <label for="InputTitle">Title</label>
+        <input asp-for="Title" type="text" class="form-control" id="InputTitle" required>
+    </div>
+    <div class="form-group">
+        <label for="InputContent1">Content</label>
+        <textarea asp-for="Content" class="form-control" id="InputContent1" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="InputCategory1">Category</label>
+        <select id="InputCategory1" class="form-control" data-role="select-dropdown" data-profile="minimal" asp-for="Category">
+            <option class="dropdown-item" href="#">Select this, to use the lastest.</option>
+            <option class="dropdown-item" href="#">Undefined</option>
+            @foreach (Library.Types.ChangeCategory CurrentChangeCategory in Model.Categories)
+            {
+                <option class="dropdown-item" href="#">@CurrentChangeCategory.TITLE</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-secondary" href="/Changes">Back</a>
+</form>

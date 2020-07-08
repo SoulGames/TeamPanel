@@ -3,14 +3,11 @@ using System;
 
 namespace Library.Types
 {
-    [Table("changelog")]
-    public class Change
+    [Table("category")]
+    public class ChangeCategory
     {
         [ExplicitKey]
         public int ID { get; set; }
         public string TITLE { get; set; }
-        public string CHANGENEWS { get; set; }
-        public DateTime CREATED_AT { get; set; }
-        public int CAT { get; set; }
     }
 }

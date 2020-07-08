@@ -10,20 +10,18 @@ using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using Library.Managers;
 using Library.Types;
-using System.IO;
 
 namespace TeamPanel.Pages
 {
-    public class ChangesIndexModel : PageModel
+    public class ChangesCategoryIndexModel : PageModel
     {
         private MySqlConnection MySQL;
 
-        public IEnumerable<Change> Changes;
-        public Dictionary<int, string> Categories = new Dictionary<int, string>();
+        public IEnumerable<ChangeCategory> Categories;
 
         public Account LoginUser;
 
-        public ChangesIndexModel(MySqlConnection mySQL)
+        public ChangesCategoryIndexModel(MySqlConnection mySQL)
         {
             MySQL = mySQL;
         }
@@ -34,11 +32,7 @@ namespace TeamPanel.Pages
             AuthorizationResult authorizationResult;
             if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
 
-            Changes = MySQL.GetAll<Change>();
-
-            Categories.Add(0, "Undefined");
-            foreach(ChangeCategory CurrentChangeCategory in MySQL.GetAll<ChangeCategory>())
-            { Categories.Add(CurrentChangeCategory.ID, CurrentChangeCategory.TITLE); }
+            Categories = MySQL.GetAll<ChangeCategory>();
 
             return Page();
 

@@ -19,6 +19,7 @@ namespace TeamPanel.Pages
         private MySqlConnection MySQL;
         public Account LoginUser;
 
+        public IEnumerable<ChangeCategory> Categories;
 
         [BindProperty]
         public string Title { get; set; }
@@ -39,6 +40,8 @@ namespace TeamPanel.Pages
             if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
             LoginUser = authorizationResult.Account;
 
+            Categories = MySQL.GetAll<ChangeCategory>();
+
             return Page();
         }
 
@@ -52,7 +55,25 @@ namespace TeamPanel.Pages
             change.TITLE = Title;
             change.CHANGENEWS = Content;
             change.CREATED_AT = DateTime.Now;
-            change.CAT = "";
+
+            if (Category == "Undefined")
+            {
+                change.CAT = 0;
+            }
+            else
+            {
+                foreach (ChangeCategory CurrentChangeCategory in MySQL.GetAll<ChangeCategory>())
+                {
+                    if (CurrentChangeCategory.TITLE == Category)
+                    {
+                        change.CAT = CurrentChangeCategory.ID;
+                    }
+                }
+                if (String.IsNullOrEmpty(Convert.ToString(change.CAT)))
+                {
+                    change.CAT = 0;
+                }
+            }
 
             MySQL.Insert(change);
 

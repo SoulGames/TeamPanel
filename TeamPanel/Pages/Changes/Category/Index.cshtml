@@ -1,0 +1,43 @@
+﻿@page
+@model ChangesCategoryIndexModel
+@{
+    ViewData["Title"] = "Change Categories";
+}
+
+<center>
+    <a class="btn btn-primary" asp-page="Add">Add</a>
+    <a class="btn btn-secondary" href="/Changes">Back</a>
+</center>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Types.ChangeCategory CurrentCategory in Model.Categories)
+        {
+            <tr>
+                <th scope="row">@CurrentCategory.ID</th>
+                <td>@CurrentCategory.TITLE</td>
+                <td>
+                    <a class="btn btn-danger btn-sm" role="button" id="delete" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:;">Delete</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="modal-body">
+                            <p>Are you sure, you want to delete this Category?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-danger mr-2" href="/Changes/Category/Delete?id=@CurrentCategory.ID">Confirm</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <a class="btn btn-info btn-sm" role="button" href="/Changes/Category/Edit?id=@CurrentCategory.ID">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
