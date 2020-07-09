@@ -9,5 +9,6 @@ namespace Library.Types
         public int ID { get; set; }
         public string USERNAME { get; set; }
         public string PASSWORD { get; set; }
+        public int USING_BY { get; set; }
     }
 }

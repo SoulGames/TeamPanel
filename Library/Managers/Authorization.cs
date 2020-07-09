@@ -52,7 +52,7 @@ namespace Library.Managers
                 string Username = AuthenticateDecodedSplit[0];
                 string Password = AuthenticateDecodedSplit[1];
 
-                string UseritemsQuery = "select id from accounts";
+                string UseritemsQuery = "select id from accounts where USING_BY=2;";
                 List<int> UseritemsIds = MySQL.Query<int>(UseritemsQuery).ToList();
 
                 if (UseritemsIds.Count == 0)

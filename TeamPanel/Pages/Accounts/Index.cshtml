@@ -14,6 +14,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Username</th>
+            <th scope="col">Using by</th>
             <th scope="col">Options</th>
         </tr>
     </thead>
@@ -23,6 +24,23 @@
             <tr>
                 <th scope="row">@CurrentAccount.ID</th>
                 <td>@CurrentAccount.USERNAME</td>
+                <td>
+                    @switch (CurrentAccount.USING_BY)
+                    {
+                        case 0:
+                            <text>Not known</text>
+                            break;
+                        case 1:
+                            <text>Website</text>
+                            break;
+                        case 2:
+                            <text>TeamPanel</text>
+                            break;
+                        default:
+                            <text>Not known</text>
+                            break;
+                    }
+                </td>
                 <td>
                     <a class="btn btn-danger btn-sm" role="button" id="delete" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:;">Delete</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

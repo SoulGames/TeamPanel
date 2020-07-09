@@ -70,11 +70,13 @@ namespace TeamPanel.Pages
             if (String.IsNullOrEmpty(Password))
             {
                 Account.PASSWORD = MySQL.Get<Account>(Convert.ToInt32(Id)).PASSWORD;
+                Account.USING_BY = MySQL.Get<Account>(Convert.ToInt32(Id)).USING_BY;
             }
             else
             {
                 string PasswordHash = Hash.CalculateBCryptPassword(Password);
                 Account.PASSWORD = PasswordHash;
+                Account.USING_BY = 2;
             }
 
 

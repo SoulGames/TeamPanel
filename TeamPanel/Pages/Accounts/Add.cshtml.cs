@@ -51,6 +51,7 @@ namespace TeamPanel.Pages
             Account Account = new Account();
             Account.USERNAME = Username;
             Account.PASSWORD = PasswordHash;
+            Account.USING_BY = 2;
 
             MySQL.Insert(Account);
 
