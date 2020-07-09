@@ -88,7 +88,7 @@ namespace TeamPanel.Pages
             {
                 if (Category == "Select this, to use the lastest.")
                 {
-                <    Change.CAT = MySQL.Get<ChangeCategory>(Change.CAT).ID;
+                     Change.CAT = MySQL.Get<ChangeCategory>(Change.CAT).ID;
                 }
                 else
                 {
