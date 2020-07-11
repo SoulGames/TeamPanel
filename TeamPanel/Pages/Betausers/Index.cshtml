@@ -1,0 +1,41 @@
+﻿@page
+@model BetausersIndexModel
+@{
+    ViewData["Title"] = "Betausers";
+}
+
+<center>
+    <a class="btn btn-primary" asp-page="Add">Add</a>
+</center>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Types.BetaUser CurrentBetauser in Model.BetaUsers)
+        {
+            <tr>
+                <th scope="row">@CurrentBetauser.ID</th>
+                <td>@CurrentBetauser.USERNAME</td>
+                <td>
+                    <a class="btn btn-danger btn-sm" role="button" id="delete" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:;">Remove</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="modal-body">
+                            <p>Are you sure, you want to remove this user from the Beta?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a type="button" class="btn btn-danger mr-2" href="/Betausers/Delete?id=@CurrentBetauser.ID">Confirm</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,14 @@
+﻿@page
+@model BetausersAddModel
+@{
+    ViewData["Title"] = "Add new Betauser";
+}
+
+    <form method="post">
+        <div class="form-group">
+            <label for="InputUsername">Username</label>
+            <input asp-for="Username" type="text" class="form-control" id="InputUsername" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-secondary" asp-page="Betausers/Index">Back</a>
+    </form>
