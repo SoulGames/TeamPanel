@@ -23,22 +23,22 @@
     <tbody>
         @foreach (Library.Types.Task CurrentTask in Model.Tasks)
         {
-        <tr>
-            <td>
-                @if (CurrentTask.DONE)
-                {
-                    <input type="checkbox" checked onclick="window.location = '/Tasks/Done?id=' + @CurrentTask.ID">
-                }
-                else
-                {
-                    <input type="checkbox" onclick="window.location = '/Tasks/Done?id=' + @CurrentTask.ID">
-                }
-            </td>
-            <td>@CurrentTask.TITLE</td>
-            <td>@CurrentTask.PROJECT</td>
-            <td>@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</td>
-            <td>@Model.Accounts[CurrentTask.CREATOR].USERNAME</td>
-        </tr>
+            <tr>
+                <td>
+                    @if (CurrentTask.DONE)
+                    {
+                        <input type="checkbox" checked onclick="window.location = '/Tasks/Done?id=' + @CurrentTask.ID">
+                    }
+                    else
+                    {
+                        <input type="checkbox" onclick="window.location = '/Tasks/Done?id=' + @CurrentTask.ID">
+                    }
+                </td>
+                <td>@CurrentTask.TITLE</td>
+                <td>@CurrentTask.PROJECT</td>
+                <td>@if (CurrentTask.ASSIGNED != null) { <text>@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</text> }</td>
+                <td>@Model.Accounts[CurrentTask.CREATOR].USERNAME</td>
+            </tr>
         }
     </tbody>
 </table>
