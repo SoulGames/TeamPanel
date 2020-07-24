@@ -4,7 +4,47 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="card">
+    <h5 class="card-header">ToDo <small>Tasks assigned</small></h5>
+    <div class="card-body">
+        @if (Model.Tasks.Count == 0)
+        {
+            <text>Nothing to do for you!</text> <a href="/Tasks/Add">Add?</a>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Project</th>
+                        <th scope="col">Assigned</th>
+                        <th scope="col">Creator</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Library.Types.Task CurrentTask in Model.Tasks)
+                    {
+                        <tr>
+                            <td>
+                                @if (CurrentTask.DONE)
+                                {
+                                    <input type="checkbox" onclick="window.location = '/Tasks/Done?id=@CurrentTask.ID&redirect=@Model.Request.Path.Value'" checked>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" onclick="window.location = '/Tasks/Done?id=@CurrentTask.ID&redirect=@Model.Request.Path.Value'">
+                                }
+                            </td>
+                            <td>@CurrentTask.TITLE</td>
+                            <td>@CurrentTask.PROJECT</td>
+                            <td>@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</td>
+                            <td>@Model.Accounts[CurrentTask.CREATOR].USERNAME</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
 </div>
