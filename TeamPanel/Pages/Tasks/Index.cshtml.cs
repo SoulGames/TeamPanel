@@ -63,14 +63,14 @@ namespace TeamPanel.Pages
                             if (CurrentTask.ASSIGNED.Equals(authorizationResult.Account.ID)) { Tasks.Add(CurrentTask); }
                         }
                         break;
-                    default:
+                    case "me":
                         foreach (Library.Types.Task CurrentTask in AllTasks)
                         {
                             if (CurrentTask.ASSIGNED.Equals(authorizationResult.Account.ID)) { Tasks.Add(CurrentTask); break; }
                             if (CurrentTask.CREATOR.Equals(authorizationResult.Account.ID)) { Tasks.Add(CurrentTask); }
                         }
                         break;
-                    case "all":
+                    default:
                         Tasks = AllTasks.ToList();
                         break;
                 }
