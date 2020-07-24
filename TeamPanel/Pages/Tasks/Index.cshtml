@@ -24,7 +24,16 @@
         @foreach (Library.Types.Task CurrentTask in Model.Tasks)
         {
         <tr>
-            <th scope="row">@CurrentTask.ID</th>
+            <td>
+                @if (CurrentTask.DONE)
+                {
+                    <input type="checkbox" checked onclick="window.location = '/Tasks/Done?id=' + @CurrentTask.ID">
+                }
+                else
+                {
+                    <input type="checkbox" onclick="window.location = '/Tasks/Done?id=' + @CurrentTask.ID">
+                }
+            </td>
             <td>@CurrentTask.TITLE</td>
             <td>@CurrentTask.PROJECT</td>
             <td>@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</td>

@@ -13,5 +13,6 @@ namespace Library.Types
         public int? ASSIGNED { get; set; }
         public int? CREATOR { get; set; }
         public DateTime CREATED_AT { get; set; }
+        public bool DONE { get; set; }
     }
 }
