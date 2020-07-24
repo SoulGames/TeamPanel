@@ -12,6 +12,7 @@ using Library.Managers;
 using Library.Types;
 using System.IO;
 using System.Runtime.InteropServices;
+using Dapper;
 
 namespace TeamPanel.Pages
 {
@@ -31,7 +32,7 @@ namespace TeamPanel.Pages
             MySQL = mySQL;
         }
 
-        public IActionResult OnGet(int? id, string mode)
+        public IActionResult OnGet(int? id, string mode, string done)
         {
             // Authorization
             AuthorizationResult authorizationResult;
@@ -39,7 +40,15 @@ namespace TeamPanel.Pages
 
             if (String.IsNullOrEmpty(Convert.ToString(id)))
             {
-                IEnumerable<Library.Types.Task> AllTasks = MySQL.GetAll<Library.Types.Task>();
+                IEnumerable<Library.Types.Task> AllTasks;
+                if (!(done == "true"))
+                {
+                    AllTasks = MySQL.Query<Library.Types.Task>("SELECT * FROM tasks WHERE DONE=FALSE;");
+                }
+                else
+                {
+                    AllTasks = MySQL.GetAll<Library.Types.Task>();
+                }
                 switch (mode)
                 {
                     case "created":
