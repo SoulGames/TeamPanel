@@ -1,0 +1,29 @@
+﻿@page
+@model TasksAddModel
+@{
+    ViewData["Title"] = "Task Creation";
+}
+
+<form method="post">
+    <input hidden asp-for="LoginUserId">
+    <div class="form-group">
+        <label for="InputTitle">Title <small>(What needs to do?)</small></label>
+        <input asp-for="Title" type="text" class="form-control" id="InputTitle" required>
+    </div>
+    <div class="form-group">
+        <label for="InputContent1">Project <small>(In which topic is your task?)</small></label>
+        <input asp-for="Project" class="form-control" id="InputContent1" required></input>
+    </div>
+    <div class="form-group">
+        <label for="InputCategory1">Assign <small>(Who will do your task?)</small></label>
+        <select id="InputCategory1" class="form-control" data-role="select-dropdown" data-profile="minimal" asp-for="Assign">
+            <option class="dropdown-item" href="#">Not set</option>
+            @foreach (Library.Types.Account CurrentAccount in Model.AllUsers)
+            {
+                <option class="dropdown-item" href="#">@CurrentAccount.USERNAME</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-secondary" href="/Tasks">Back</a>
+</form>

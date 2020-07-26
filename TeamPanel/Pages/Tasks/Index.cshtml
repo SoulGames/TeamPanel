@@ -1,0 +1,44 @@
+﻿@page
+@model TasksIndexModel
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+<center>
+    <a class="btn btn-primary" asp-page="Add">Add</a>
+</center>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Project</th>
+            <th scope="col">Assigned</th>
+            <th scope="col">Creator</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Library.Types.Task CurrentTask in Model.Tasks)
+        {
+            <tr>
+                <td>
+                    @if (CurrentTask.DONE)
+                    {
+                        <input type="checkbox" checked onclick="window.location = '/Tasks/Done?id=' + @CurrentTask.ID">
+                    }
+                    else
+                    {
+                        <input type="checkbox" onclick="window.location = '/Tasks/Done?id=' + @CurrentTask.ID">
+                    }
+                </td>
+                <td>@CurrentTask.TITLE</td>
+                <td>@CurrentTask.PROJECT</td>
+                <td>@if (CurrentTask.ASSIGNED != null) { <text>@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</text> }</td>
+                <td>@Model.Accounts[CurrentTask.CREATOR].USERNAME</td>
+            </tr>
+        }
+    </tbody>
+</table>
