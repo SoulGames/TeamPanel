@@ -12,7 +12,18 @@
     </div>
     <div class="form-group">
         <label for="InputContent1">Project <small>(In which topic is your task?)</small></label>
-        <input asp-for="Project" class="form-control" id="InputContent1" required></input>
+        <div class="input-group">
+            <input asp-for="Project" class="form-control" id="InputProject" type="text" required>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select</button>
+                <div class="dropdown-menu">
+                    @foreach (Library.Types.GitHub.Repo Repo in Model.GetGitHubRepos())
+                    {
+                        <a class="dropdown-item" href="javascript:;" onclick="document.getElementById('InputProject').value = '@Repo.name';">@Repo.name</a>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label for="InputCategory1">Assign <small>(Who will do your task?)</small></label>
