@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using Library.Managers;
 using Library.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using MySqlConnector;
-using Library.Managers;
-using Library.Types;
+using System.Net;
+using System.IO;
+using Library.Types.GitHub;
+using Newtonsoft.Json;
 
 namespace TeamPanel.Pages
 {
@@ -41,7 +40,7 @@ namespace TeamPanel.Pages
         {
             // Authorization
             AuthorizationResult authorizationResult;
-            if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
+            if (!Library.Managers.Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
             LoginUser = authorizationResult.Account;
             LoginUserId = LoginUser.ID;
 
@@ -76,6 +75,20 @@ namespace TeamPanel.Pages
             MySQL.Insert(task);
 
             return Redirect("/Tasks");
+        }
+
+        public List<Repo> GetGitHubRepos()
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(String.Format("https://api.github.com/users/{0}/repos", Entries.dic["GITHUB"]));
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            request.UserAgent = Entries.dic["GITHUB"];
+            request.Accept = "application/json";
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+
+            using (StreamReader reader = new StreamReader(stream))
+            { return JsonConvert.DeserializeObject<List<Repo>>(reader.ReadToEnd()); }
         }
     }
 }
