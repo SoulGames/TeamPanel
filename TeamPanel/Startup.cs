@@ -41,6 +41,7 @@ namespace TeamPanel
 
             string cs = ConnectionBuilder.ConnectionString;
 
+            Library.Managers.Entries.Load(new MySqlConnection(ConnectionBuilder.ConnectionString));
 
             MySqlConnection connection = new MySqlConnection(ConnectionBuilder.ConnectionString);
 

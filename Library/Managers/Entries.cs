@@ -8,12 +8,12 @@ using System.Text;
 
 namespace Library.Managers
 {
-    class Entries
+    public class Entries
     {
-        public Dictionary<string, string> dic = new Dictionary<string, string>();
-        public List<Entry> list;
+        public static Dictionary<string, string> dic = new Dictionary<string, string>();
+        public static List<Entry> list = new List<Entry>();
 
-        public void Load(MySqlConnection MySQL)
+        public static void Load(MySqlConnection MySQL)
         {
             foreach (Entry CurrentEntry in MySQL.GetAll<Entry>())
             {
