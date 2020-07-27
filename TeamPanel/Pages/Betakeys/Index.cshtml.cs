@@ -32,6 +32,7 @@ namespace TeamPanel.Pages
             AuthorizationResult authorizationResult;
             if (!Authorization.CheckAuthorization(HttpContext, MySQL, HttpContext.Response, out authorizationResult)) { return StatusCode(authorizationResult.StatusCode); }
             LoginUser = authorizationResult.Account;
+            if (LoginUser.ROLE != "admin") { return Redirect("/"); }
 
             BetaKeys = MySQL.GetAll<BetaKey>();
 

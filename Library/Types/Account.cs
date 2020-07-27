@@ -10,5 +10,6 @@ namespace Library.Types
         public string USERNAME { get; set; }
         public string PASSWORD { get; set; }
         public int USING_BY { get; set; }
+        public string ROLE { get; set; }
     }
 }
