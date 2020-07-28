@@ -38,8 +38,10 @@
                 <td>@CurrentTask.PROJECT</td>
                 <td>
                     <select id="InputCategory1" class="form-control" data-role="select-dropdown" data-profile="minimal">
-                        @if (!(CurrentTask.ASSIGNED == null | CurrentTask.ASSIGNED==0)) { <option class="dropdown-item" href="#">@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</option>}
+
+                        @if (!(CurrentTask.ASSIGNED == null | CurrentTask.ASSIGNED == 0)) { <option class="dropdown-item" href="#">@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</option>}
                         <option class="dropdown-item" onclick="window.location = '/Tasks/Assign?id=@CurrentTask.ID'">Not set</option>
+
                         @foreach (Library.Types.Account CurrentAccount in Model.AllUsers)
                         {
                             if (CurrentAccount.ID != CurrentTask.ASSIGNED)
@@ -47,6 +49,7 @@
                                 <option class="dropdown-item" onclick="window.location = '/Tasks/Assign?id=@CurrentTask.ID&user=@CurrentAccount.ID'">@CurrentAccount.USERNAME</option>
                             }
                         }
+
                     </select>
                 </td>
                 <td>@Model.Accounts[CurrentTask.CREATOR].USERNAME</td>
