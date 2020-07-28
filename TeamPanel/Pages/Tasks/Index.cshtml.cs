@@ -23,6 +23,8 @@ namespace TeamPanel.Pages
         public List<Library.Types.Task> Tasks = new List<Library.Types.Task>();
         public Library.Types.Task Task;
 
+        public IEnumerable<Account> AllUsers;
+
         public Dictionary<int?, Account> Accounts  = new Dictionary<int?, Account>();
 
         public Account LoginUser;
@@ -84,6 +86,7 @@ namespace TeamPanel.Pages
             {
                 Accounts.Add(CurrentAccount.ID, CurrentAccount);
             }
+            AllUsers = MySQL.GetAll<Account>();
 
             return Page();
 

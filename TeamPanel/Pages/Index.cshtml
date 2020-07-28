@@ -26,22 +26,37 @@
                 <tbody>
                     @foreach (Library.Types.Task CurrentTask in Model.Tasks)
                     {
-                        <tr>
-                            <td>
-                                @if (CurrentTask.DONE)
+                    <tr>
+                        <td>
+                            @if (CurrentTask.DONE)
+                            {
+                                <input type="checkbox" onclick="window.location = '/Tasks/Done?id=@CurrentTask.ID&redirect=@Model.Request.Path.Value'" checked>
+                            }
+                            else
+                            {
+                                <input type="checkbox" onclick="window.location = '/Tasks/Done?id=@CurrentTask.ID&redirect=@Model.Request.Path.Value'">
+                            }
+                        </td>
+                        <td>@CurrentTask.TITLE</td>
+                        <td>@CurrentTask.PROJECT</td>
+                        <td>
+                            <select id="InputCategory1" class="form-control" data-role="select-dropdown" data-profile="minimal">
+
+                                @if (!(CurrentTask.ASSIGNED == null | CurrentTask.ASSIGNED == 0)) { <option class="dropdown-item" href="#">@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</option> }
+                                <option class="dropdown-item" onclick="window.location = '/Tasks/Assign?id=@CurrentTask.ID&redirect=@Model.Request.Path.Value'">Not set</option>
+                                
+                                @foreach (Library.Types.Account CurrentAccount in Model.AllUsers)
                                 {
-                                    <input type="checkbox" onclick="window.location = '/Tasks/Done?id=@CurrentTask.ID&redirect=@Model.Request.Path.Value'" checked>
+                                    if (CurrentAccount.ID != CurrentTask.ASSIGNED)
+                                    {
+                                        <option class="dropdown-item" onclick="window.location = '/Tasks/Assign?id=@CurrentTask.ID&user=@CurrentAccount.ID&redirect=@Model.Request.Path.Value'">@CurrentAccount.USERNAME</option>
+                                    }
                                 }
-                                else
-                                {
-                                    <input type="checkbox" onclick="window.location = '/Tasks/Done?id=@CurrentTask.ID&redirect=@Model.Request.Path.Value'">
-                                }
-                            </td>
-                            <td>@CurrentTask.TITLE</td>
-                            <td>@CurrentTask.PROJECT</td>
-                            <td>@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</td>
-                            <td>@Model.Accounts[CurrentTask.CREATOR].USERNAME</td>
-                        </tr>
+
+                            </select>
+                        </td>
+                        <td>@Model.Accounts[CurrentTask.CREATOR].USERNAME</td>
+                    </tr>
                     }
                 </tbody>
             </table>
