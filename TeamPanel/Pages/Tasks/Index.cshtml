@@ -38,7 +38,7 @@
                 <td>@CurrentTask.PROJECT</td>
                 <td>
                     <select id="InputCategory1" class="form-control" data-role="select-dropdown" data-profile="minimal">
-                        @if (CurrentTask.ASSIGNED != null) { <option class="dropdown-item" href="#">@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</option>}
+                        @if (!(CurrentTask.ASSIGNED == null | CurrentTask.ASSIGNED==0)) { <option class="dropdown-item" href="#">@Model.Accounts[CurrentTask.ASSIGNED].USERNAME</option>}
                         <option class="dropdown-item" href="#">Not set</option>
                         @foreach (Library.Types.Account CurrentAccount in Model.AllUsers)
                         {
